@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Matrix Stack Example</title>
+    <link rel="icon" href="../../matrix-stack.ico">
+    <script src="../../matrix-stack.js"></script>
+  </head>
+  <body>
+    <canvas width="600" height="600"></canvas>
+    <script>
+      function load() {
+        var canvas = document.querySelector('canvas');
+        var c = canvas.getContext('2d');	// context
+
+        var t = new MatrixStack();	// transformation
+        t.pushMatrix();
+        t.translate(30, 30);
+        t.rotate(-Math.PI/4);
+        t.scale(3, 2);
+
+        t.applyToContext(c);
+        c.strokeStyle = 'purple';
+        c.strokeRect(0, 0, 10, 10);
+
+        t.popMatrix();
+        t.pushMatrix();
+        t.translate(45, 45);
+        t.scale(1, 5);
+        t.rotate(0.123);
+
+        t.applyToContext(c);
+        c.strokeStyle = 'darkgreen';
+        c.strokeRect(0, 0, 10, 10);
+      }
+      window.addEventListener('load', load);
+
+    </script>
+  </body>
+</html>
