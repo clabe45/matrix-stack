@@ -8,39 +8,32 @@
   <body>
     <canvas width="600" height="600"></canvas>
     <script>
-      var canvas, c;
-      var rotation = 0, globalScale = 1;
-      var prevMouseX = 0, prevMouseY = 0;
-      var t = new MatrixStack();	// transformation
-      function mouseMoved(e) {
-        if (e) {
-          globalScale += (e.clientX - prevMouseX) / 100;
-          rotation += (e.clientY - prevMouseY) / 100;
-          prevMouseX = e.clientX;
-          prevMouseY = e.clientY;
-        }
-        t.loadIdentity();
-        t.applyToContext(c);
-        c.clearRect(0, 0, 600, 600);
-        t.scale(globalScale, globalScale);
-        t.rotate(rotation);
-        for (var i=0; i<20; i++) {
-          t.pushMatrix();
-          t.translate(30*i, 0);
-          t.scale((20-i)/10, 1);
-          t.applyToContext(c);
-          c.fillStyle = 'rgba(100,0,0,'+((20-i)/20)+')';
-          c.fillRect(0, 0, 20, 20);
-          t.popMatrix();
-        }
-      }
       function load() {
-        canvas = document.querySelector('canvas');
-        c = canvas.getContext('2d');	// context
-        mouseMoved();
+        var canvas = document.querySelector('canvas');
+        var c = canvas.getContext('2d');	// context
+
+        var t = new MatrixStack();	// doesn't bind matrix stack to any context in constructor (uses MatrixStack#applyToContext(context))
+        t.pushMatrix();  // save identity matrix
+        t.translate(30, 30);
+        t.rotate(-Math.PI/4);
+        t.scale(3, 2);
+
+        c.strokeStyle = 'purple';
+        c.strokeRect(0, 0, 10, 10);
+        t.popMatrix();
+
+        t.pushMatrix();
+        t.translate(45, 45);
+        t.scale(1, 5);
+        t.rotate(0.123);
+
+        t.applyToContext(c);
+        c.strokeStyle = 'darkgreen';
+        c.strokeRect(0, 0, 10, 10);
+        t.popMatrix();
       }
       window.addEventListener('load', load);
-      window.addEventListener('mousemove', mouseMoved);
+
     </script>
   </body>
 </html>

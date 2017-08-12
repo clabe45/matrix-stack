@@ -12,25 +12,13 @@
         var canvas = document.querySelector('canvas');
         var c = canvas.getContext('2d');	// context
 
-        var t = new MatrixStack();	// transformation
-        t.pushMatrix();
-        t.translate(30, 30);
-        t.rotate(-Math.PI/4);
-        t.scale(3, 2);
+        var t = new MatrixStack(c);	// binds context to matrix stack in constructor
+        t.translate(40, 10);
+        t.rotate(Math.PI/3);
 
-        t.applyToContext(c);
-        c.strokeStyle = 'purple';
-        c.strokeRect(0, 0, 10, 10);
+        c.fillStyle = 'green';
+        c.fillRect(0, 0, 20, 20);
 
-        t.popMatrix();
-        t.pushMatrix();
-        t.translate(45, 45);
-        t.scale(1, 5);
-        t.rotate(0.123);
-
-        t.applyToContext(c);
-        c.strokeStyle = 'darkgreen';
-        c.strokeRect(0, 0, 10, 10);
       }
       window.addEventListener('load', load);
 
